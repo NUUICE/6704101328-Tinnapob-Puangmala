@@ -1,38 +1,33 @@
+# .github/workflows/deploy.yml
 name: Quasar CI/CD
 
 on:
   push:
-    branches: [ cicd ]
-
-permissions:
-  contents: write   # ✅ ให้สิทธิ์เขียนเนื้อหา (จำเป็นต่อการ push)
+    branches:
+      - cicd
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧰 Checkout repository
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false  # ✅ ใช้ token ของขั้น deploy แทน
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: 🏗 Build Quasar project
+      - name: Build Quasar project
         run: npm run build
 
-      - name: 🚀 Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # ✅ จะมี write ถ้าข้อ 1 สำเร็จ
-          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/spa
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
+

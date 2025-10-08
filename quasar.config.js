@@ -1,16 +1,11 @@
-// Configuration for your app
+// quasar.config.js
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers'
 
-export default defineConfig((/* ctx */) => {
+export default defineConfig(() => {
   return {
-    // app boot file (/src/boot)
-    boot: [],
-
-    css: [
-      'app.scss'
-    ],
+    css: ['app.scss'],
 
     extras: [
       'roboto-font',
@@ -20,14 +15,11 @@ export default defineConfig((/* ctx */) => {
     build: {
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
-        node: 'node20'
+        node: 'node20',
       },
 
-      // ✅ ใช้ hash mode (เหมาะกับ GitHub Pages)
-      vueRouterMode: 'hash',
-
-      // ✅ ตั้งค่า publicPath ให้ตรงกับชื่อ repo
-      publicPath: '/6704101328-Tinnapob-Puangmala/',
+      vueRouterMode: 'hash', // ✅ ต้องใช้ hash mode สำหรับ GitHub Pages
+      publicPath: '/6704101328-Tinnapob-Puangmala/', // ✅ สำคัญ ต้องตรงกับชื่อ repo
 
       vitePlugins: [
         ['vite-plugin-checker', {
@@ -52,9 +44,7 @@ export default defineConfig((/* ctx */) => {
 
     ssr: {
       prodPort: 3000,
-      middlewares: [
-        'render'
-      ],
+      middlewares: ['render'],
       pwa: false
     },
 
@@ -70,6 +60,7 @@ export default defineConfig((/* ctx */) => {
       preloadScripts: ['electron-preload'],
       inspectPort: 5858,
       bundler: 'packager',
+
       builder: {
         appId: '6704101328-tinnapob-puangmala'
       }
@@ -80,4 +71,3 @@ export default defineConfig((/* ctx */) => {
     }
   }
 })
-
