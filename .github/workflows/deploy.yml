@@ -2,16 +2,20 @@ name: Quasar CI/CD
 
 on:
   push:
-    branches:
-      - cicd  # ✅ trigger เมื่อ push มาที่ branch cicd
+    branches: [ cicd ]
+
+permissions:
+  contents: write   # ✅ ให้สิทธิ์เขียนเนื้อหา (จำเป็นสำหรับการ push)
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧰 Checkout repo
+      - name: 🧰 Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false   # ✅ ใช้ token ของขั้น deploy แทน
 
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
@@ -28,4 +32,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages      # (ค่าเริ่มต้นก็ gh-pages แต่ระบุไว้ให้ชัด)
           publish_dir: ./dist/spa
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
